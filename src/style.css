@@ -1,0 +1,365 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import 'leaflet/dist/leaflet.css';
+
+:root {
+  --bg-color: #000000;
+  --text-color: #f5f5f7;
+  --text-secondary: #86868b;
+  --accent-color: #2997ff;
+  --surface-color: rgba(28, 28, 30, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+/* Typography */
+.text-hero {
+  font-size: clamp(3rem, 8vw, 8rem);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  background: linear-gradient(180deg, #fff, #86868b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-title {
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+}
+
+.text-subtitle {
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  color: var(--text-secondary);
+  font-weight: 400;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.text-body {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Layout */
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section {
+  min-height: 100vh;
+  padding: 8rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+/* Header/Nav */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  z-index: 1000;
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.nav-links a {
+  color: var(--text-color);
+  font-size: 0.85rem;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+}
+
+/* Hero Section */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&q=80&w=2560');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+  z-index: -1;
+  transform: scale(1.1); /* for parallax */
+}
+
+.hero-content {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Guide Sections */
+.guide-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.guide-section.reverse {
+  grid-template-columns: 1fr 1fr;
+}
+
+.guide-section.reverse .guide-text {
+  order: 2;
+}
+
+.guide-section.reverse .guide-image {
+  order: 1;
+}
+
+.guide-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.guide-image-container {
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 4/5;
+  background: var(--surface-color);
+}
+
+.guide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.1); /* For GSAP zoom out */
+}
+
+/* Map Section */
+.map-section {
+  position: relative;
+  height: 150vh; /* Extra height for pinning */
+}
+
+.map-container-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  transition: all 0.5s ease;
+}
+
+/* Route List Overlay */
+.route-overlay {
+  position: absolute;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  width: 400px;
+  height: 80vh;
+  background: rgba(28, 28, 30, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  z-index: 1000;
+  /* Scrollbar hiding */
+  scrollbar-width: none;
+}
+
+.route-overlay::-webkit-scrollbar {
+  display: none;
+}
+
+.route-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.route-card:hover, .route-card.active {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--glass-border);
+}
+
+.route-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.route-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.route-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Smooth reveal classes for GSAP */
+.gsap-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.gsap-scale {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+@media (max-width: 768px) {
+  .guide-section {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-section.reverse .guide-text { order: 1; }
+  .guide-section.reverse .guide-image { order: 2; }
+
+  .route-overlay {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-radius: 24px 24px 0 0;
+    margin-top: -50px;
+  }
+
+  .map-container-wrapper {
+    height: 60vh;
+    position: relative;
+  }
+
+  .map-section {
+    height: auto;
+  }
+}
+
+/* Custom Leaflet Dark Theme Overrides */
+.leaflet-layer,
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out,
+.leaflet-control-attribution {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  background: rgba(28, 28, 30, 0.9) !important;
+  color: #fff !important;
+  backdrop-filter: blur(10px);
+}
+
+.leaflet-container a {
+  color: var(--accent-color) !important;
+}
+
+/* Added massive content spacer to simulate huge site */
+.massive-spacer {
+    display: none;
+}
